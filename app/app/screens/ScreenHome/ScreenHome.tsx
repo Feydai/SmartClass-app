@@ -12,9 +12,8 @@ const ScreenHome = (): React.JSX.Element => {
     <View>
       <Text>screenHome</Text>
       <Button
-        title="Login"
+        title="LOGIN"
         onPress={() => {
-          console.log(navigation.getState()); // 👈 Ajoute ça
           navigation.navigate("login");
         }}
       />
