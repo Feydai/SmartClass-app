@@ -1,6 +1,5 @@
 import React from "react";
-import RootStack from "./navigations";
-import { NavigationContainer } from "@react-navigation/native";
+import RootStack from "./navigations/route";
 
 const App = (): React.JSX.Element => {
   return <RootStack />;

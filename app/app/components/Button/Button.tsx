@@ -1,10 +1,14 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
-import { componentPropsButton } from "../../types/componentsProps";
+import { StyleSheet, TouchableOpacity, Text } from "react-native";
+import { ButtonProps } from "../../../types";
+import myTheme from "@/app/theme/theme";
 import { useNavigation } from "@react-navigation/native";
 
-type Props = componentPropsButton;
-const CustomButton: React.FC<Props> = ({ title, onPress, navigateTo }) => {
+const CustomButton: React.FC<ButtonProps> = ({
+  children,
+  onPress,
+  navigateTo,
+}) => {
   const navigation = useNavigation<any>();
 
   const handlePress = () => {
@@ -16,31 +20,23 @@ const CustomButton: React.FC<Props> = ({ title, onPress, navigateTo }) => {
   };
 
   return (
-    <View style={styles.container}>
     <TouchableOpacity style={styles.button} onPress={handlePress}>
-      <Text style={styles.text}>{title}</Text>
+      <Text style={styles.text}>{children}</Text>
     </TouchableOpacity>
-    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-  },
   button: {
-    backgroundColor: "white",
+    backgroundColor: myTheme.colors.primary,
     padding: 10,
-    borderRadius: 10,
-    width: "80%",
+    borderRadius: 11,
   },
   text: {
-    color: "black",
+    color: myTheme.colors.buttonText,
     textAlign: "center",
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "900",
-    fontFamily: "Inter",
   },
 });
 
