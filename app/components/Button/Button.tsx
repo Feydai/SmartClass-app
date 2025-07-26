@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, Text } from "react-native";
-import { ButtonProps } from "../../../types";
-import myTheme from "@/app/theme/theme";
+import { ButtonProps } from "../../types";
+import myTheme from "../../theme/theme";
 import { useNavigation } from "@react-navigation/native";
 
 const CustomButton: React.FC<ButtonProps> = ({

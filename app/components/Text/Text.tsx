@@ -1,6 +1,7 @@
 import React from "react";
-import { Text, StyleSheet, TextStyle } from "react-native";
-import { TextProps, TextVarient } from "../../../types";
+import { Text, TextStyle } from "react-native";
+import myTheme from "../../theme/theme";
+import { TextProps, TextVarient } from "../../types/";
 
 const FontSize: Record<TextVarient, number> = {
   title: 24,
@@ -10,7 +11,7 @@ const FontSize: Record<TextVarient, number> = {
 
 const BaseText: React.FC<TextProps> = ({
   children,
-  color = "#20293A",
+  color = myTheme.colors.text,
   bold = false,
   textVarient = "regular",
 }) => {
@@ -20,13 +21,7 @@ const BaseText: React.FC<TextProps> = ({
     fontSize: FontSize[textVarient],
   };
 
-  return <Text style={[styles.text, style]}>{children}</Text>;
+  return <Text style={[style]}>{children}</Text>;
 };
-
-const styles = StyleSheet.create({
-  text: {
-    fontFamily: "Inter",
-  },
-});
 
 export default BaseText;
