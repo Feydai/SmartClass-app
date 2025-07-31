@@ -14,6 +14,7 @@ const BaseText: React.FC<TextProps> = ({
   color = myTheme.colors.text,
   bold = false,
   textVarient = "regular",
+  customStyle = {},
 }) => {
   const style: TextStyle = {
     color: color,
@@ -21,7 +22,7 @@ const BaseText: React.FC<TextProps> = ({
     fontSize: FontSize[textVarient],
   };
 
-  return <Text style={[style]}>{children}</Text>;
+  return <Text style={[style, customStyle]}>{children}</Text>;
 };
 
 export default BaseText;

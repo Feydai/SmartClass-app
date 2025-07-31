@@ -1,4 +1,4 @@
-import { StyleType } from "../../types/";
+import { StyleType } from "../types";
 
 const myTheme: StyleType = {
   colors: {

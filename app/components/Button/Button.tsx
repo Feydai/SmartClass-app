@@ -8,6 +8,7 @@ const CustomButton: React.FC<ButtonProps> = ({
   children,
   onPress,
   navigateTo,
+  customStyle = {},
 }) => {
   const navigation = useNavigation<any>();
 
@@ -21,7 +22,7 @@ const CustomButton: React.FC<ButtonProps> = ({
 
   return (
     <TouchableOpacity style={styles.button} onPress={handlePress}>
-      <Text style={styles.text}>{children}</Text>
+      <Text style={[styles.text, customStyle]}>{children}</Text>
     </TouchableOpacity>
   );
 };
