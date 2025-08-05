@@ -5,13 +5,13 @@ import { User } from "@/types";
 type AuthStore = {
     user: User | null;
     token: string | null;
-    setUser: (user: User, token: string) => void;
+    setUser: (user: User) => void;
     logout: () => void;
 };
 
 export const useAuthStore = create<AuthStore>((set) => ({
     user: null,
     token: null,
-    setUser: (user, token) => set({ user, token }),
+    setUser: (user) => set({ user }),
     logout: () => set({ user: null, token: null }),
 }));

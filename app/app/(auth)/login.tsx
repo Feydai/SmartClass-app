@@ -1,14 +1,27 @@
-import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet, View, TextInput} from "react-native";
-import { BaseText } from "../../components"
-import { Image } from "expo-image"
+import React, { useState } from "react";
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, TextInput, Button, Text } from "react-native";
+import { useLogin } from "@/hooks/useLogin";
+import { useRouter } from "expo-router";
 
-export default function Home() {
-    const logo = require("../../assets/logo/logo.png")
+const Login = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const router = useRouter();
+    const { mutate, isPending, error } = useLogin();
+
+    const handleLogin = () => {
+        mutate({ email, password });
+    };
+
     return (
         <SafeAreaView>
-            <Image source={logo}/>
-            <BaseText>login screen rtr</BaseText>
+            <TextInput value={email} onChangeText={setEmail} placeholder="Email" />
+            <TextInput value={password} onChangeText={setPassword} placeholder="Password" secureTextEntry />
+            {error && <Text>{error.message}</Text>}
+            <Button title="Connexion" onPress={handleLogin} />
         </SafeAreaView>
-       );
-}
+    );
+};
+
+export default Login;
