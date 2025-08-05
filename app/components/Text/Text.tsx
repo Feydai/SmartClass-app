@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, TextStyle } from "react-native";
 import myTheme from "../../theme/theme";
-import { TextProps, TextVarient } from "../../types/";
+import { TextProps, TextVarient } from "@/types";
 
 const FontSize: Record<TextVarient, number> = {
   title: 24,

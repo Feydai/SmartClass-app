@@ -1,14 +1,15 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, Text } from "react-native";
-import { ButtonProps } from "../../types";
+import { ButtonProps } from "@/types";
 import myTheme from "../../theme/theme";
 import { useNavigation } from "@react-navigation/native";
+import { Link } from "expo-router"
 
 const CustomButton: React.FC<ButtonProps> = ({
   children,
   onPress,
   navigateTo,
-  customStyle = {},
+  customStyle = {}, link,
 }) => {
   const navigation = useNavigation<any>();
 
@@ -19,11 +20,16 @@ const CustomButton: React.FC<ButtonProps> = ({
       onPress();
     }
   };
-
-  return (
-    <TouchableOpacity style={styles.button} onPress={handlePress}>
-      <Text style={[styles.text, customStyle]}>{children}</Text>
-    </TouchableOpacity>
+  return link ? (
+      <Link href={link} asChild>
+        <TouchableOpacity style={[styles.button, customStyle]}>
+          <Text style={[styles.text]}>{children}</Text>
+        </TouchableOpacity>
+      </Link>
+  ) : (
+      <TouchableOpacity style={[styles.button, customStyle]} onPress={handlePress}>
+        <Text style={[styles.text]}>{children}</Text>
+      </TouchableOpacity>
   );
 };
 

@@ -13,7 +13,9 @@ export default function Home() {
         <Image source={logo} style={styles.img} contentFit="contain" />
       </View>
       <View style={styles.bottom}>
-        <Button customStyle={{ width: "100%" }}>CONNEXION</Button>
+        <Button customStyle={{ width: "100%" }} link="/login">
+  s        Se Connecter
+        </Button>
       </View>
     </ImageBackground>
   );
