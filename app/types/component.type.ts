@@ -20,3 +20,10 @@ export type TextProps = {
   bold?: boolean;
   customStyle?: StyleProp<TextStyle>;
 };
+
+export type InputProps = {
+  label: string;
+  value: string;
+  onChangeText: (text: string) => void;
+  placeholder?: string | undefined;
+}
