@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, Text } from "react-native";
+import {StyleSheet, TouchableOpacity, Text, View, Pressable} from "react-native";
 import { ButtonProps } from "@/types";
 import myTheme from "../../theme/theme";
 import { useNavigation } from "@react-navigation/native";
@@ -21,11 +21,13 @@ const CustomButton: React.FC<ButtonProps> = ({
     }
   };
   return link ? (
-      <Link href={link} asChild>
-        <TouchableOpacity style={[styles.button, customStyle]}>
-          <Text style={[styles.text]}>{children}</Text>
-        </TouchableOpacity>
-      </Link>
+     <View style={[styles.button, customStyle]}>
+       <Link href={link} asChild>
+         <Pressable>
+           <Text style={styles.text}>{children}</Text>
+         </Pressable>
+       </Link>
+     </View>
   ) : (
       <TouchableOpacity style={[styles.button, customStyle]} onPress={handlePress}>
         <Text style={[styles.text]}>{children}</Text>

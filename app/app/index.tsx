@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button } from "../components";
+import { Link } from "expo-router"
 
 const slides = [
   { message: "Bienvenue sur SmartClass", bgColor: "#CCDBDC", textColor: "#00332e" },
@@ -47,7 +48,7 @@ export default function TexteAnime() {
           {displayedText}.
         </Text>
         <View style={styles.bottomContainer}>
-          <Button customStyle={{ width: "90%" }}>Se connecter</Button>
+          <Button link={"/(auth)/login"} customStyle={{ width: "90%" }}>Se connecter</Button>
           <TouchableOpacity onPress={() => alert("Contactez votre administrateur pour créer un compte")}>
             <Text style={styles.contactText}>Pas de compte ? Contactez l’administrateur</Text>
           </TouchableOpacity>
