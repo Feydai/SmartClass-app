@@ -4,7 +4,7 @@ import myTheme from "../../theme/theme";
 import { InputProps } from "@/types";
 import { BaseText } from "../index.ts";
 
-const CustomInput: React.FC<InputProps> = ({ label, value, onChangeText, placeholder }) => {
+const CustomInput: React.FC<InputProps> = ({ label, value, onChangeText, placeholder,  secureTextEntry}) => {
     const [focused, setFocused] = useState(false);
 
     return (
@@ -30,6 +30,7 @@ const CustomInput: React.FC<InputProps> = ({ label, value, onChangeText, placeho
                     onFocus={() => setFocused(true)}
                     onBlur={() => setFocused(false)}
                     style={styles.input}
+                    secureTextEntry={secureTextEntry}
                 />
             </View>
         </View>
@@ -42,11 +43,9 @@ const styles = StyleSheet.create({
         borderWidth: 1.5,
         borderRadius: 12,
         backgroundColor: "#FFFFFF",
-        // Ombre iOS
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 4 },
         shadowRadius: 10,
-        // Élevation Android
         elevation: 2,
     },
     input: {

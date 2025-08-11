@@ -29,7 +29,7 @@ const Login = () => {
             <Input label="Password"
                    value={password}
                    onChangeText={setPassword}
-                   placeholder="Password"  />
+                   placeholder="Password"  secureTextEntry={true}/>
             {error && <Text>{error.message}</Text>}
             <Button customStyle={{ width: "90%" }} onPress={handleLogin}>Connexion</Button>
         </SafeAreaView>
