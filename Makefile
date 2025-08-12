@@ -1,4 +1,4 @@
-strat:
+start:
 	cd app && npx expo start  && npm install
 
 tunnel:
