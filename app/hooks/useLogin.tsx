@@ -12,7 +12,7 @@ export const useLogin = () => {
         mutationFn: (credentials: LoginCredentials) => userApi.login(credentials),
         onSuccess: ( { data }) => {
             setUser(data);
-            router.replace("/")
+            router.replace("/(app)/(tabs)/profile")
         },
         onError: (error: Error) => {
             console.error(error);

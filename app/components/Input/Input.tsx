@@ -38,7 +38,11 @@ const CustomInput: React.FC<InputProps> = ({ label, value, onChangeText, placeho
 };
 
 const styles = StyleSheet.create({
-    container: { width: "100%", gap: 6 },
+    container: {
+        width: "80%",
+        gap: 6,
+        paddingBottom: 10,
+    },
     box: {
         borderWidth: 1.5,
         borderRadius: 12,

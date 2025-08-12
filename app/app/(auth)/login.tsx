@@ -17,21 +17,24 @@ const Login = () => {
         mutate({ email, password });
     };
 
-    const img = require("../../assets/logo/logo.png");
     return (
         <SafeAreaView style={styles.container}>
-            <Image source={img} />
-            <BaseText>Bienvenue</BaseText>
-            <Input label="Email"
+            <Image
+                source={require("../../assets/logo/logo.png")}
+                style={{ width: 200, height: 120 }}
+                contentFit="contain"
+            />
+            <BaseText bold={true} textVarient={"title"}>Bienvenue</BaseText>
+            <Input label="Email :"
                    value={email}
                    onChangeText={setEmail}
                    placeholder="vous@ecole.fr" />
-            <Input label="Password"
+            <Input label="Mot de passe "
                    value={password}
                    onChangeText={setPassword}
-                   placeholder="Password"  secureTextEntry={true}/>
+                   placeholder="Mot de passe"  secureTextEntry={true}/>
             {error && <Text>{error.message}</Text>}
-            <Button customStyle={{ width: "90%" }} onPress={handleLogin}>Connexion</Button>
+            <Button customStyle={styles.button} onPress={handleLogin}>Connexion</Button>
         </SafeAreaView>
     );
 };
@@ -42,6 +45,9 @@ const styles = StyleSheet.create ({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+    },
+    button: {
+        width: "80%",
     }
 })
 
