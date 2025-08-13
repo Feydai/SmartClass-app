@@ -1,13 +1,9 @@
 import { View, Text, Alert } from "react-native";
-import { useRouter } from "expo-router";
 import { useLogout} from "@/hooks/useLogin";
 import { Button } from "@/components";
-import {useState} from "react";
 
 export default function Profile() {
-    const router = useRouter();
-    const { mutate, error } = useLogout();
-    const [user, setUser] = useState("");
+    const { mutate } = useLogout();
 
     const handleLogout = () => {
         mutate()

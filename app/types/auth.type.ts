@@ -1,14 +1,19 @@
-export interface LoginCredentials {
+export type LoginCredentials = {
     email: string;
     password: string;
+    deviceToken?: string;
 }
 
-export interface User {
+export type User = {
     id: string;
     email: string;
-    role: string;
-    firstName: string;
-    lastName: string;
-    createdAt?: string;
-    updatedAt?: string;
+    role: "teacher" | "admin";
 }
+
+export type LoginResponseMobile = {
+    data: {
+        user: User;
+        token: string;
+    };
+    message: string;
+};
