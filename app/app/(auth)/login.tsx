@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { TextInput, Text, StyleSheet } from "react-native";
+import { Text, StyleSheet } from "react-native";
 import { useLogin } from "@/hooks/useLogin";
 import { useRouter } from "expo-router";
 import { Image } from "expo-image";

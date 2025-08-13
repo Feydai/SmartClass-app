@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button } from "../components";
-import { Link } from "expo-router"
 
 const slides = [
   { message: "Bienvenue sur SmartClass", bgColor: "#CCDBDC", textColor: "#00332e" },

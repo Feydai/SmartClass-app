@@ -19,3 +19,14 @@ export const useLogin = () => {
         }
     });
 };
+
+export const useLogout = () => {
+    const router = useRouter();
+
+    return useMutation({
+        mutationFn: () => userApi.logout(),
+        onSuccess:() => {
+            router.replace("/");
+        }
+    })
+}
