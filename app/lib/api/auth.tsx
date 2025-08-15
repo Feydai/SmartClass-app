@@ -3,7 +3,7 @@ import { LoginCredentials, User, LoginResponseMobile} from "@/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const userApi = {
-    login: async (credentials: LoginCredentials): Promise<User> => {
+    login: async (credentials: LoginCredentials): Promise< User > => {
         const res = await apiClient.post<LoginResponseMobile>("/user/login", credentials);
         const { user, token } = res.data.data;
 
@@ -22,5 +22,6 @@ export const userApi = {
 
     logout: async (): Promise<void> => {
         await apiClient.post('/user/logout');
+        await AsyncStorage.removeItem("accessToken");
     },
 }

@@ -15,5 +15,4 @@ export type LoginResponseMobile = {
         user: User;
         token: string;
     };
-    message: string;
 };

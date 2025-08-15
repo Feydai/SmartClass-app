@@ -33,7 +33,6 @@ const Login = () => {
                    value={password}
                    onChangeText={setPassword}
                    placeholder="Mot de passe"  secureTextEntry={true}/>
-            {error && <Text>{error.message}</Text>}
             <Button customStyle={styles.button} onPress={handleLogin}>Connexion</Button>
         </SafeAreaView>
     );
