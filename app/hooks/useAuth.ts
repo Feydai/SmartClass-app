@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { userApi } from "@/lib/api/auth";
+import { userApi } from "@/lib/api/auth.ts";
 import {LoginCredentials, User} from "@/types";
 import {useAuthStore} from "@/store/authStore.tsx";
 import {useRouter} from "expo-router";

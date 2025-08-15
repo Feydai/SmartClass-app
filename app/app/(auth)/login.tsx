@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, StyleSheet } from "react-native";
-import { useAuth } from "@/hooks/useAuth.tsx";
+import { useAuth } from "@/hooks/useAuth.ts";
 import { useRouter } from "expo-router";
 import { Image } from "expo-image";
 import { Input } from "../../components"
