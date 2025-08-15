@@ -1,5 +1,5 @@
 import { View, Text, Alert } from "react-native";
-import { useLogout} from "@/hooks/useLogin";
+import { useLogout} from "@/hooks/useAuth.tsx";
 import { Button } from "@/components";
 
 export default function Profile() {

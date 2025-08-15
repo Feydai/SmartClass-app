@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, StyleSheet } from "react-native";
-import { useLogin } from "@/hooks/useLogin";
+import { useAuth } from "@/hooks/useAuth.tsx";
 import { useRouter } from "expo-router";
 import { Image } from "expo-image";
 import { Input } from "../../components"
@@ -11,7 +11,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
-    const { mutate, isPending, error } = useLogin();
+    const { mutate, isPending, error } = useAuth();
 
     const handleLogin = () => {
         mutate({ email, password });

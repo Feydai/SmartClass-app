@@ -6,7 +6,7 @@ import {useRouter} from "expo-router";
 import {Alert} from "react-native"
 import { AxiosError } from "axios";
 
-export const useLogin = () => {
+export const useAuth = () => {
     const setUser = (useAuthStore((state) => state.setUser))
     const router = useRouter();
 
