@@ -1,14 +1,25 @@
-export type planningWeekly = {
-    startDate: string,
-    endDate: string,
-    building: string,
-    floor: string,
-}
+export type PlannedClass = {
+    id: string;
+    title: string;
+    start: string;
+    end: string;
+    roomName: string;
+    group?: string | null;
+};
+
+export type WeekPlanningData = {
+    lessons: PlannedClass[];
+};
 
 export type PlanningFilters = {
     startDate: string;
     endDate: string;
-    year: number;
+    year?: number;
     building?: string;
-    floor?: number;
-}
+    floor?: string;
+};
+
+export type PlanningFilterOptions = {
+    buildings: string[];
+    floors: Array<string | number>;
+};
