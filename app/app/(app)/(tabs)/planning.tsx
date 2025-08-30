@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import { View, Text, SectionList, RefreshControl, TouchableOpacity, ActivityIndicator, ScrollView } from "react-native";
 import dayjs, { Dayjs } from "dayjs";
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -18,17 +18,19 @@ export default function PlanningScreen() {
     const [floor, setFloor] = useState<string | undefined>();
 
     const { start, end } = useMemo(() => getWeekRange(weekAnchor), [weekAnchor]);
-
+    const floorNum = floor != null ? Number(floor) : undefined;
     const filters: PlanningFilters = useMemo(
         () => ({
             startDate: start.format("YYYY-MM-DD"),
             endDate: end.format("YYYY-MM-DD"),
             year: start.year(),
             building,
-            floor,
+            floor: Number.isFinite(floorNum) ? floorNum : undefined,
         }),
-        [start, end, building, floor]
+        [start, end, building, floorNum]
     );
+    useEffect(() => {
+    }, [filters]);
 
     const { data: options, isLoading: loadingFilters, isError: filtersError } = usePlanningFilters();
     const { data, isLoading, isRefetching, refetch, isError: planningError } = useWeeklyPlanning(filters);

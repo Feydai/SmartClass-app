@@ -1,9 +1,9 @@
 import { apiClient } from "@/lib/client.ts";
-import { LoginCredentials, User, LoginResponseMobile} from "@/types";
+import {LoginCredentials, User, LoginResponseMobile, AuthData} from "@/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const userApi = {
-    login: async (credentials: LoginCredentials): Promise< User > => {
+    login: async (credentials: LoginCredentials): Promise<AuthData> => {
         const res = await apiClient.post<LoginResponseMobile>("/user/login", credentials);
         const { user, token } = res.data.data;
 
@@ -12,9 +12,10 @@ export const userApi = {
         }
 
         await AsyncStorage.setItem("accessToken", token);
-        return user;
-    },
+        apiClient.defaults.headers.common.Authorization = `Bearer ${token}`;
 
+        return { user, token }; // ➝ AuthData
+    },
     getMe: async (): Promise<{ data: User }> => {
         const response = await apiClient.get('/user/me');
         return response.data;
