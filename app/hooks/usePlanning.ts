@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { planningApi } from "@/lib/api/planning";
-import type { PlanningFilters, WeekPlanningData, PlanningFilterOptions } from "@/types/";
+import type { PlanningFilters, WeekPlanningData, PlanningFilterOptions } from "@/types";
 
 export const usePlanningFilters = () =>
     useQuery<PlanningFilterOptions>({
@@ -11,8 +11,7 @@ export const usePlanningFilters = () =>
 
 export const useWeeklyPlanning = (filters: PlanningFilters) =>
     useQuery<WeekPlanningData>({
-        queryKey: ["planning", "weekly", filters],
-        queryFn: () => planningApi.getWeeklyPlanning(filters),
+        queryKey: ["planning", "weekly", "teacher", filters],
+        queryFn: () => planningApi.getWeeklyPlanningForTeacher(filters),
         staleTime: 5 * 60 * 1000,
-        enabled: !!filters.startDate && !!filters.endDate,
     });

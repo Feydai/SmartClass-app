@@ -1,21 +1,34 @@
-import { apiClient } from "../client";
-import type { PlanningFilters, PlanningFilterOptions, WeekPlanningData } from "@/types/";
+import { apiClient } from "@/lib/client";
+import dayjs from "dayjs";
+import type {
+    PlanningFilters,
+    WeekPlanningData,
+    PlanningFilterOptions,
+    TeacherPlanningApi,
+} from "@/types";
+import {normalizeToWeekPlanningData} from "@/utils/planningMapper.ts";
 
 export const planningApi = {
-    async getWeeklyPlanning(filters: PlanningFilters): Promise<WeekPlanningData> {
-        const q = new URLSearchParams();
-        q.append("startDate", filters.startDate);
-        q.append("endDate", filters.endDate);
-        if (typeof filters.year === "number") q.append("year", String(filters.year));
-        if (filters.building) q.append("building", filters.building);
-        if (typeof filters.floor !== "undefined" && filters.floor !== "") q.append("floor", String(filters.floor));
-
-        const { data } = await apiClient.get<{ data: WeekPlanningData }>(`/teacher/planning?${q.toString()}`);
-        return data.data;
+    getFilterOptions: async (): Promise<PlanningFilterOptions> => {
+        const res = await apiClient.get("/teacher/planning/filters");
+        return res.data.data as PlanningFilterOptions;
     },
+    getWeeklyPlanningForTeacher: async (
+        filters: PlanningFilters
+    ): Promise<WeekPlanningData> => {
+        const startDate = dayjs(filters.startDate).format("YYYY-MM-DD");
+        const endDate   = dayjs(filters.endDate).format("YYYY-MM-DD");
+        const year      = filters.year ?? dayjs(filters.startDate).year();
 
-    async getFilterOptions(): Promise<PlanningFilterOptions> {
-        const { data } = await apiClient.get<{ data: PlanningFilterOptions }>("/teacher/planning/filters");
-        return data.data;
+        const params: Record<string, string | number | undefined> = {
+            startDate,
+            endDate,
+            year,
+            building: filters.building || undefined,
+            floor: typeof filters.floor === "number" ? filters.floor : undefined,
+        };
+        const res = await apiClient.get("/teacher/planning", { params });
+        const apiShape = res.data.data as TeacherPlanningApi;
+        return normalizeToWeekPlanningData(apiShape);
     },
 };
