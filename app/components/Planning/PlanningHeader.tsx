@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Dayjs } from "dayjs";
+import { Button } from "@/components";
 import  myTheme  from "../../theme/theme";
 
 type Props = {
@@ -13,9 +14,9 @@ type Props = {
 export function PlanningHeader({ start, end, onPrevWeek, onNextWeek }: Props) {
     return (
         <View style={styles.header}>
-            <TouchableOpacity onPress={onPrevWeek} style={styles.navBtn}>
+            <Button onPress={onPrevWeek}>
                 <Text style={styles.navBtnText}>‹</Text>
-            </TouchableOpacity>
+            </Button>
 
             <View style={styles.headerCenter}>
                 <Text style={styles.headerRange}>
@@ -24,9 +25,9 @@ export function PlanningHeader({ start, end, onPrevWeek, onNextWeek }: Props) {
                 <Text style={styles.headerSub}>{`Semaine ${start.isoWeek?.() ?? start.week()}`}</Text>
             </View>
 
-            <TouchableOpacity onPress={onNextWeek} style={styles.navBtn}>
+            <Button onPress={onNextWeek}>
                 <Text style={styles.navBtnText}>›</Text>
-            </TouchableOpacity>
+            </Button>
         </View>
     );
 }
@@ -63,8 +64,8 @@ const styles = StyleSheet.create({
     },
     navBtnText: {
         fontSize: 20,
-        lineHeight: 20,
-        color: myTheme.colors.text,
+        lineHeight: 10,
+        color: "FFFFFF",
         fontWeight: "800"
     },
 });
