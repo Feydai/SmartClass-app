@@ -9,7 +9,6 @@ import { getWeekRange } from "@/utils/week";
 import { usePlanningFilters, useWeeklyPlanning } from "@/hooks/usePlanning";
 import type { PlannedClass, PlanningFilters } from "@/types";
 import { PlanningHeader } from "@/components/Planning/PlanningHeader";
-import { FiltersBar } from "@/components/Planning/FilterBar.tsx";
 import { DaySectionHeader } from "@/components/Planning/DaySectionHeader.tsx";
 import { LessonCard } from "@/components/Planning/LesssonCard.tsx";
 import  myTheme  from "../../../theme/theme";
@@ -55,25 +54,6 @@ export default function PlanningScreen() {
             data: lessons.sort((a, b) => dayjs(a.start).valueOf() - dayjs(b.start).valueOf()),
         }));
     }, [data]);
-
-    type Opt = { label: string; value: string };
-    function toOpts(arr: any[] | undefined): Opt[] {
-        if (!arr) return [];
-        return arr.map((x) => {
-            if (typeof x === "string" || typeof x === "number") {
-                return { label: String(x), value: String(x) };
-            }
-            if (x && typeof x === "object") {
-                const val = x.value ?? x.id ?? x.code ?? x.key ?? x.name ?? x.label ?? JSON.stringify(x);
-                const lab = x.label ?? x.name ?? String(val);
-                return { label: String(lab), value: String(val) };
-            }
-            return { label: String(x), value: String(x) };
-        });
-    }
-
-    const buildingOpts: Opt[] = toOpts(options?.buildings);
-    const floorOpts: Opt[] = toOpts(options?.floors);
 
     const showLoader = loadingFilters && isLoading;
 
