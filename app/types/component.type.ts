@@ -28,3 +28,11 @@ export type InputProps = {
   placeholder?: string | undefined;
   secureTextEntry?: boolean;
 }
+
+export type FilterProps = {
+  customStyle?: StyleProp<TextStyle>;
+  label: string,
+  active?: boolean,
+  onPress?: () => void,
+  style?: { backgroundColor: string; borderColor: string }
+}

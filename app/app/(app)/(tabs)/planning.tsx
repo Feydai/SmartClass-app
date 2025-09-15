@@ -1,12 +1,19 @@
-import React, {useEffect, useMemo, useState} from "react";
-import { View, Text, SectionList, RefreshControl, TouchableOpacity, ActivityIndicator, ScrollView } from "react-native";
-import dayjs, { Dayjs } from "dayjs";
+import React, { useEffect, useMemo, useState } from "react";
+import {
+    View, Text, SectionList, RefreshControl, ActivityIndicator, StyleSheet
+} from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/fr";
 import { getWeekRange } from "@/utils/week";
 import { usePlanningFilters, useWeeklyPlanning } from "@/hooks/usePlanning";
-import type { PlannedClass, PlanningFilters } from "@/types/";
-import { FilterChip } from "@/components/";
+import type { PlannedClass, PlanningFilters } from "@/types";
+import { PlanningHeader } from "@/components/Planning/PlanningHeader";
+import { FiltersBar } from "@/components/Planning/FilterBar.tsx";
+import { DaySectionHeader } from "@/components/Planning/DaySectionHeader.tsx";
+import { LessonCard } from "@/components/Planning/LesssonCard.tsx";
+import  myTheme  from "../../../theme/theme";
+
 
 dayjs.locale("fr");
 
@@ -19,6 +26,7 @@ export default function PlanningScreen() {
 
     const { start, end } = useMemo(() => getWeekRange(weekAnchor), [weekAnchor]);
     const floorNum = floor != null ? Number(floor) : undefined;
+
     const filters: PlanningFilters = useMemo(
         () => ({
             startDate: start.format("YYYY-MM-DD"),
@@ -29,8 +37,8 @@ export default function PlanningScreen() {
         }),
         [start, end, building, floorNum]
     );
-    useEffect(() => {
-    }, [filters]);
+
+    useEffect(() => {}, [filters]);
 
     const { data: options, isLoading: loadingFilters, isError: filtersError } = usePlanningFilters();
     const { data, isLoading, isRefetching, refetch, isError: planningError } = useWeeklyPlanning(filters);
@@ -49,7 +57,6 @@ export default function PlanningScreen() {
     }, [data]);
 
     type Opt = { label: string; value: string };
-
     function toOpts(arr: any[] | undefined): Opt[] {
         if (!arr) return [];
         return arr.map((x) => {
@@ -57,8 +64,7 @@ export default function PlanningScreen() {
                 return { label: String(x), value: String(x) };
             }
             if (x && typeof x === "object") {
-                const val =
-                    x.value ?? x.id ?? x.code ?? x.key ?? x.name ?? x.label ?? JSON.stringify(x);
+                const val = x.value ?? x.id ?? x.code ?? x.key ?? x.name ?? x.label ?? JSON.stringify(x);
                 const lab = x.label ?? x.name ?? String(val);
                 return { label: String(lab), value: String(val) };
             }
@@ -69,79 +75,45 @@ export default function PlanningScreen() {
     const buildingOpts: Opt[] = toOpts(options?.buildings);
     const floorOpts: Opt[] = toOpts(options?.floors);
 
+    const showLoader = loadingFilters && isLoading;
+
     return (
-        <SafeAreaView style={{ flex: 1, paddingTop: 12 }}>
-            <View style={{ paddingHorizontal: 16, marginBottom: 8, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                <TouchableOpacity onPress={() => setWeekAnchor((d) => d.subtract(1, "week"))}>
-                    <Text>{"<"} Semaine -1</Text>
-                </TouchableOpacity>
-                <Text style={{ fontWeight: "bold" }}>
-                    {start.format("DD MMM")} — {end.format("DD MMM YYYY")}
-                </Text>
-                <TouchableOpacity onPress={() => setWeekAnchor((d) => d.add(1, "week"))}>
-                    <Text>Semaine +1 {">"}</Text>
-                </TouchableOpacity>
-            </View>
-            <ScrollView horizontal={false} style={{ paddingHorizontal: 16, marginBottom: 8 }}>
-                <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 6 }}>
-                    {buildingOpts.map((b) => {
-                        const active = building === b.value;
-                        return (
-                            <FilterChip
-                                key={`b-${b.value}`}
-                                label={b.label}
-                                active={active}
-                                onPress={() => setBuilding((prev) => (prev === b.value ? undefined : b.value))}
-                            />
-                        );
-                    })}
-                </View>
-                <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                    {floorOpts.map((f) => {
-                        const active = floor === f.value;
-                        return (
-                            <FilterChip
-                                key={`f-${f.value}`}
-                                label={f.label}
-                                active={active}
-                                onPress={() => setFloor((prev) => (prev === f.value ? undefined : f.value))}
-                            />
-                        );
-                    })}
-                </View>
-            </ScrollView>
-            {filtersError && <Text style={{ color: "red", paddingHorizontal: 16 }}>Erreur lors du chargement des filtres.</Text>}
-            {planningError && <Text style={{ color: "red", paddingHorizontal: 16 }}>Erreur lors du chargement du planning.</Text>}
-            {loadingFilters && isLoading ? (
-                <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <SafeAreaView style={[styles.safe, { backgroundColor: myTheme.colors.background }]}>
+            <PlanningHeader
+                start={start}
+                end={end}
+                onPrevWeek={() => setWeekAnchor((d) => d.subtract(1, "week"))}
+                onNextWeek={() => setWeekAnchor((d) => d.add(1, "week"))}
+            />
+
+            {filtersError && <Text style={[styles.errorText, { marginHorizontal: 16 }]}>Erreur lors du chargement des filtres.</Text>}
+            {planningError && <Text style={[styles.errorText, { marginHorizontal: 16 }]}>Erreur lors du chargement du planning.</Text>}
+
+            {showLoader ? (
+                <View style={styles.loader}>
                     <ActivityIndicator />
-                    <Text style={{ marginTop: 8 }}>Chargement du planning…</Text>
+                    <Text style={styles.loaderText}>Chargement du planning…</Text>
                 </View>
             ) : (
                 <SectionList
                     sections={sections}
                     keyExtractor={(item) => item.id}
                     refreshControl={<RefreshControl refreshing={isLoading || isRefetching} onRefresh={refetch} />}
-                    renderSectionHeader={({ section: { title } }) => (
-                        <View style={{ backgroundColor: "#f6f6f6", paddingVertical: 6, paddingHorizontal: 16 }}>
-                            <Text style={{ fontWeight: "600" }}>{title}</Text>
-                        </View>
-                    )}
-                    renderItem={({ item }) => (
-                        <View style={{ padding: 16, borderBottomWidth: 1, borderBottomColor: "#eee" }}>
-                            <Text style={{ fontWeight: "bold" }}>{item.title}</Text>
-                            <Text>
-                                {dayjs(item.start).format("HH:mm")} — {dayjs(item.end).format("HH:mm")} • {item.roomName}
-                            </Text>
-                            {!!item.group && <Text>{item.group}</Text>}
-                        </View>
-                    )}
-                    ListEmptyComponent={
-                        !isLoading ? <Text style={{ textAlign: "center", marginTop: 24 }}>Aucun cours pour cette semaine.</Text> : null
-                    }
+                    stickySectionHeadersEnabled
+                    renderSectionHeader={({ section: { title } }) => <DaySectionHeader title={title} />}
+                    renderItem={({ item }) => <LessonCard item={item} />}
+                    ListEmptyComponent={!isLoading ? <Text style={styles.emptyText}>Aucun cours pour cette semaine.</Text> : null}
                     contentInsetAdjustmentBehavior="automatic"
                 />
             )}
         </SafeAreaView>
     );
 }
+
+const styles = StyleSheet.create({
+    safe: { flex: 1, paddingTop: 12 },
+    loader: { flex: 1, alignItems: "center", justifyContent: "center" },
+    loaderText: { marginTop: 8, color: myTheme.colors.textMuted },
+    errorText: { color: myTheme.colors.danger, fontWeight: "600" },
+    emptyText: { textAlign: "center", marginTop: 24, color: myTheme.colors.textMuted, fontStyle: "italic" },
+});

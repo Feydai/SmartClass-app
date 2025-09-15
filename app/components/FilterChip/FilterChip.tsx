@@ -1,26 +1,45 @@
 import React from "react";
-import { TouchableOpacity, Text } from "react-native";
+import { TouchableOpacity, Text, StyleSheet, ViewStyle } from "react-native";
+import { FilterProps } from "@/types";
 
-type Props = {
-    label: string;
-    active?: boolean;
-    onPress?: () => void;
-};
-
-const FilterChip: React.FC<Props> = ({ label, active, onPress }) => (
+const FilterChip: React.FC<FilterProps> = ({label, active, onPress, style, customStyle = {},}) => (
     <TouchableOpacity
         onPress={onPress}
-        style={{
-            paddingHorizontal: 10,
-            paddingVertical: 6,
-            borderRadius: 16,
-            backgroundColor: active ? "#222" : "#eee",
-            marginRight: 8,
-            marginBottom: 8,
-        }}
+        style={[
+            styles.chip,
+            {
+                backgroundColor: active ? "#649C96" : "#FFFFFF",
+                borderColor: active ? "#649C96" : "#E5E7EB",
+            },
+            style,
+            customStyle as ViewStyle,
+        ]}
     >
-        <Text style={{ color: active ? "#fff" : "#222" }}>{label}</Text>
+        <Text
+            style={[
+                styles.label,
+                { color: active ? "#FFFFFF" : "#20293A" },
+            ]}
+        >
+            {label}
+        </Text>
     </TouchableOpacity>
 );
+
+const styles = StyleSheet.create({
+    chip: {
+        paddingHorizontal: 14,
+        paddingVertical: 8,
+        borderRadius: 20,
+        borderWidth: 1,
+        margin: 4,
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    label: {
+        fontSize: 14,
+        fontWeight: "600",
+    },
+});
 
 export default FilterChip;
